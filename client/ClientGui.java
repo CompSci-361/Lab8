@@ -1,5 +1,3 @@
-package editor;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +7,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
@@ -40,7 +40,7 @@ public class ClientGui {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Client window = new Client();
+					ClientGui window = new ClientGui();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class ClientGui {
 	/**
 	 * Create the application.
 	 */
-	public Client() {
+	public ClientGui() {
 		initialize();
 	}
 
@@ -124,6 +124,13 @@ public class ClientGui {
 		rdbtnNewRadioButton.setBounds(335, 107, 66, 23);
 		panel.add(rdbtnNewRadioButton);
 		
+		ButtonGroup btnGroup = new ButtonGroup();
+		btnGroup.add(rdbtnFemale);
+		btnGroup.add(rdbtnMale);
+		btnGroup.add(rdbtnNewRadioButton);
+		btnGroup.clearSelection();
+		
+		
 		JLabel lblTitle = new JLabel("Title");
 		lblTitle.setBounds(123, 136, 46, 14);
 		panel.add(lblTitle);
@@ -137,10 +144,33 @@ public class ClientGui {
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Submitting Data");
-				String fName = textField.getText();
+				
+				fName = textField.getText();
+				lName = textField_1.getText();
+				department = textField_2.getText();
+				phone = textField_3.getText();
+				//JRadioButton test = (JRadioButton) btnGroup.getSelection();
+				//gender = test.getText();
+				if(rdbtnFemale.isSelected())
+					gender = rdbtnFemale.getText();
+				if(rdbtnMale.isSelected())
+					gender = rdbtnMale.getText();
+				if(rdbtnNewRadioButton.isSelected())
+					gender = rdbtnNewRadioButton.getText();
 				System.out.println(fName);
-				String title = (String) comboBox.getSelectedItem();
+				System.out.println(lName);
+				System.out.println(department);
+				System.out.println(phone);
+				System.out.println(gender);
+				
+				title = (String) comboBox.getSelectedItem();
 				System.out.println(title);
+				if(fName==""||lName==""||department==""||phone==""||gender==null||title=="") {
+					System.out.println("Fill in all data points");
+					return;
+				}
+				//TODO
+				//createEmployee(fName,lName,department,phone,gender,title);
 			}
 		});
 		btnSubmit.setBounds(107, 168, 89, 23);
@@ -157,3 +187,4 @@ public class ClientGui {
 		panel.add(btnExit);
 	}
 }
+
