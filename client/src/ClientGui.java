@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+
+import com.google.gson.Gson;
+
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
@@ -16,6 +19,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 
 public class ClientGui {
@@ -72,7 +78,7 @@ public class ClientGui {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel lblFirstName = new JLabel("FIrst Name");
+		JLabel lblFirstName = new JLabel("First Name");
 		lblFirstName.setBounds(123, 11, 73, 14);
 		panel.add(lblFirstName);
 		
@@ -113,15 +119,15 @@ public class ClientGui {
 		panel.add(lblGender);
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
-		rdbtnMale.setBounds(206, 107, 52, 23);
+		rdbtnMale.setBounds(206, 107, 61, 23);
 		panel.add(rdbtnMale);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
-		rdbtnFemale.setBounds(260, 107, 73, 23);
+		rdbtnFemale.setBounds(270, 107, 76, 23);
 		panel.add(rdbtnFemale);
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Other");
-		rdbtnNewRadioButton.setBounds(335, 107, 66, 23);
+		rdbtnNewRadioButton.setBounds(348, 107, 73, 23);
 		panel.add(rdbtnNewRadioButton);
 		
 		ButtonGroup btnGroup = new ButtonGroup();
@@ -169,8 +175,34 @@ public class ClientGui {
 					System.out.println("Fill in all data points");
 					return;
 				}
-				//TODO
-				//createEmployee(fName,lName,department,phone,gender,title);
+				Employee employee = new Employee(fName,lName,department,phone,gender,title);
+				
+				try{
+				// Client will connect to this location
+				URL site = new URL("http://localhost:8000/sendresults");
+				HttpURLConnection conn = (HttpURLConnection) site.openConnection();
+
+				// now create a POST request
+				conn.setRequestMethod("POST");
+				conn.setDoOutput(true);
+				conn.setDoInput(true);
+				DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+
+				Gson g = new Gson();
+				// build a string that contains JSON from console
+				String content = g.toJson(employee);
+
+				// write out string to output buffer for message
+				out.writeBytes(content);
+				out.flush();
+				out.close();
+				System.out.println("Done sent to server");
+
+				System.out.println("Response Code: " + conn.getResponseCode());
+				}
+				catch(Exception e){
+					e.getStackTrace();
+				}
 			}
 		});
 		btnSubmit.setBounds(107, 168, 89, 23);
@@ -179,7 +211,7 @@ public class ClientGui {
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Exitting");
+				System.out.println("Exiting");
 				System.exit(0);
 			}
 		});
