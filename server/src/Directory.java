@@ -47,7 +47,8 @@ public class Directory {
 		String html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Employee Directory</title>\n</head><body><ul>";
 		
 		for(Employee e : getEmployeesFromDirectory()) {
-			html += "<li><p>"  + e.getTitle() + e.getFName() + " " + e.getLName() + " " + e.getGender() + " " + e.getDepartment() + " " + e.getPhone() + "</p></li>";
+			html += "<table>" + "<tr> <th>Title</th> <th>First Name</th> <th>Last Name</th> <th>Gender</th> <th>Department</th> <th>Phone</th></tr>"
+		    + "<tr>" + "<td>" + e.getTitle() + "</td>" + "<td>" + e.getFName() + "</td>" + "<td>" + e.getLName() + "</td>" + "<td>" + e.getGender() + "</td>" + "<td>" + e.getDepartment() + "</td>" + "<td>" + e.getPhone() + "</tr>" + "</table>";
 		}
 		
 		html += "</ul></body>\n</html>";
