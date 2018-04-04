@@ -1,7 +1,11 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,6 +26,8 @@ public class Server {
 
         // create a context to get the request to display the results
         server.createContext("/displayresults", new DisplayHandler());
+        
+        server.createContext("/style.css", new StyleHandler());
 
         // create a context to get the request for the POST
         server.createContext("/sendresults", new PostHandler());
@@ -30,6 +36,18 @@ public class Server {
         // get it going
         System.out.println("Starting Server...");
         server.start();
+	}
+	
+	static class StyleHandler implements HttpHandler {
+        public void handle(HttpExchange t) throws IOException {
+            // write out the response
+        	byte[] css = Files.readAllBytes(Paths.get("src/style.css"));
+        	
+            t.sendResponseHeaders(200, css.length);
+            OutputStream os = t.getResponseBody();
+            os.write(css);
+            os.close();
+        }
 	}
 
     static class DisplayHandler implements HttpHandler {

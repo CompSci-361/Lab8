@@ -53,6 +53,8 @@ public class Directory {
 		}
 		html += "</tr>" + "</table>";
 		html += "</ul></body>\n</html>";
+		
+		writeHTML(html);
 		return html;
 		//TODO check this
 	}
@@ -75,6 +77,22 @@ public class Directory {
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			
 			bufferedWriter.append(json);
+			
+			bufferedWriter.flush();
+			bufferedWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void writeHTML(String html) {		
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter("directory1.html"); //can be changed to .txt but .json is technically correct
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			
+			bufferedWriter.append(html);
 			
 			bufferedWriter.flush();
 			bufferedWriter.close();
