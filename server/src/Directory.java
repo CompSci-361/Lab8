@@ -44,7 +44,7 @@ public class Directory {
 	}
 	
 	public String getDirectoryAsHtml() {
-		String html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Employee Directory</title>\n<style>tr:nth-child(even){background:#f2f2f2}</style>\n</head><body><ul>";
+		String html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Employee Directory</title>\n<link href="style.css" rel="stylesheet" type="text/css"/>\n</head><body><ul>";
 		
 		for(Employee e : getEmployeesFromDirectory()) {
 			html += "<table>" + "<tr> <th>Title</th> <th>First Name</th> <th>Last Name</th> <th>Gender</th> <th>Department</th> <th>Phone</th></tr>"
