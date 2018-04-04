@@ -7,7 +7,7 @@ public class Employee {
 	private String gender;
 	private String title;
 	
-	public Employee(String fName, String lName, String phone, String department, String gender, String title){
+	public Employee(String fName, String lName, String department, String phone, String gender, String title){
 		this.fName = fName;
 		this.lName = lName;
 		this.phone = phone;

@@ -45,12 +45,11 @@ public class Directory {
 	
 	public String getDirectoryAsHtml() {
 		String html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Employee Directory</title>\n<style>tr:nth-child(even){background:#f2f2f2}</style>\n</head><body><ul>";
-		
+		html += "<table>" + "<tr> <th>Title</th> <th>First Name</th> <th>Last Name</th> <th>Gender</th> <th>Department</th> <th>Phone</th></tr>";
 		for(Employee e : getEmployeesFromDirectory()) {
-			html += "<table>" + "<tr> <th>Title</th> <th>First Name</th> <th>Last Name</th> <th>Gender</th> <th>Department</th> <th>Phone</th></tr>"
-		    + "<tr>" + "<td>" + e.getTitle() + "</td>" + "<td>" + e.getFName() + "</td>" + "<td>" + e.getLName() + "</td>" + "<td>" + e.getGender() + "</td>" + "<td>" + e.getDepartment() + "</td>" + "<td>" + e.getPhone() + "</tr>" + "</table>";
+		    html += "<tr><td>" + e.getTitle() + "</td>" + "<td>" + e.getFName() + "</td>" + "<td>" + e.getLName() + "</td>" + "<td>" + e.getGender() + "</td>" + "<td>" + e.getDepartment() + "</td>" + "<td>" + e.getPhone() + "</td>";
 		}
-		
+		html += "</tr>" + "</table>";
 		html += "</ul></body>\n</html>";
 		return html;
 		//TODO check this
